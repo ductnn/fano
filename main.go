@@ -10,7 +10,7 @@ import (
 	"github.com/apex/log"
 	"github.com/apex/log/handlers/cli"
 	"github.com/dustin/go-humanize"
-	// "github.com/tj/node-prune/internal/fano"
+	// "github.com/ductnn/fano/internal/fano"
 )
 
 func init() {
@@ -37,8 +37,6 @@ var inclusionGlobs arrayFlags
 
 func main() {
 	debug := flag.Bool("verbose", false, "Verbose log output.")
-	flag.Var(&exclusionGlobs, "exclude", "Glob of files that should not be pruned. Can be specified multiple times.")
-	flag.Var(&inclusionGlobs, "include", "Globs of files that should always be pruned in addition to the defaults. Can be specified multiple times.")
 	flag.Parse()
 	dir := flag.Arg(0)
 
