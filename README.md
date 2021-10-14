@@ -1,5 +1,7 @@
 # Fano (Fast node_modules)
 
+[![Go Report Card](https://goreportcard.com/badge/github.com/ductnn/fano)](https://goreportcard.com/report/github.com/ductnn/fano) [![license](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
 A simple tool that help you remove unneeded files from `node_modules` folder.
 
 ## Installation
@@ -25,3 +27,5 @@ Then, you can copy file `main` to project nodejs and run:
         size removed 55 MB
             duration 5.551s
 ```
+## License
+The MIT License (MIT). Please see [LICENSE](LICENSE) for more information.
