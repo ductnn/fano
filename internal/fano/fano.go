@@ -10,7 +10,7 @@ import (
 	"github.com/apex/log"
 )
 
-// DefaultFiles pruned.
+// DefaultFiles.
 var DefaultFiles = []string{
 	"Jenkinsfile",
 	"Makefile",
@@ -80,12 +80,11 @@ var DefaultFiles = []string{
 	"tsconfig.json",
 	"tslint.json",
 	".gitmodules",
-	".gitattributes",
 	"npm-debug.log",
 	"thumbs.db",
 }
 
-// DefaultDirectories pruned.
+// DefaultDirectories.
 var DefaultDirectories = []string{
 	"__tests__",
 	"test",
@@ -111,7 +110,7 @@ var DefaultDirectories = []string{
 	"gyp",
 }
 
-// DefaultExtensions pruned.
+// DefaultExtensions.
 var DefaultExtensions = []string{
 	".markdown",
 	".md",

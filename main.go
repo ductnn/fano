@@ -70,10 +70,10 @@ func main() {
 	println()
 	defer println()
 
-	output("files total", humanize.Comma(stats.FilesTotal))
-	output("files removed", humanize.Comma(stats.FilesRemoved))
-	output("size removed", humanize.Bytes(uint64(stats.SizeRemoved)))
-	output("duration", time.Since(start).Round(time.Millisecond).String())
+	output("Files total", humanize.Comma(stats.FilesTotal))
+	output("Files removed", humanize.Comma(stats.FilesRemoved))
+	output("Size removed", humanize.Bytes(uint64(stats.SizeRemoved)))
+	output("Duration", time.Since(start).Round(time.Millisecond).String())
 }
 
 func output(name, val string) {
