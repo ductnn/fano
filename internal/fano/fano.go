@@ -80,7 +80,6 @@ var DefaultFiles = []string{
 	"tsconfig.json",
 	"tslint.json",
 	".gitmodules",
-	".gitattributes",
 	"npm-debug.log",
 	"thumbs.db",
 }
