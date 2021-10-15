@@ -1,10 +1,15 @@
 BINARY_NAME=fano
 
-build: GOARCH=amd64 GOOS=darwin go build -o ${BINARY_NAME}-darwin main.go
+build:
+	GOARCH=amd64 GOOS=darwin go build -o ${BINARY_NAME} main.go
+	GOARCH=amd64 GOOS=linux go build -o ${BINARY_NAME} main.go
 
-run: ./${BINARY_NAME}
+clean:
+	rm ${BINARY_NAME}
 
-build_and_run: build run
+install:
+	sudo rm -f /usr/local/bin/$(BINARY_NAME)
+	sudo ln -s $(PWD)/$(BINARY_NAME) /usr/local/bin/
 
-clean: rm ${BINARY_NAME}-darwin
-
+uninstall:
+	sudo rm -f /usr/local/bin/$(BINARY_NAME)
