@@ -19,7 +19,6 @@ README.md go.mod    go.sum    internal  fano      main.go
 Then, you can copy file `fano` to project nodejs and run:
 
 ```bash
-./fano node_modules
 ➜  nodejs-boilerplate git:(master) ✗ ./fano node_modules
 
          Files total 78,206
