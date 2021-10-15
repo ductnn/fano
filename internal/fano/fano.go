@@ -1,4 +1,3 @@
-// Package prune provides node_modules pruning of unnecessary files.
 package fano
 
 import (
@@ -12,8 +11,6 @@ import (
 )
 
 // DefaultFiles pruned.
-//
-// Copied from yarn (mostly).
 var DefaultFiles = []string{
 	"Jenkinsfile",
 	"Makefile",
@@ -82,11 +79,13 @@ var DefaultFiles = []string{
 	".appveyor.yml",
 	"tsconfig.json",
 	"tslint.json",
+	".gitmodules",
+	".gitattributes",
+	"npm-debug.log",
+	"thumbs.db",
 }
 
 // DefaultDirectories pruned.
-//
-// Copied from yarn (mostly).
 var DefaultDirectories = []string{
 	"__tests__",
 	"test",
@@ -107,6 +106,9 @@ var DefaultDirectories = []string{
 	".github",
 	".git",
 	".gitlab",
+	"node-gyp",
+	"node-pre-gyp",
+	"gyp",
 }
 
 // DefaultExtensions pruned.
@@ -142,7 +144,6 @@ type Pruner struct {
 	wg      sync.WaitGroup
 }
 
-// Option function.
 type Option func(*Pruner)
 
 // New with the given options.
@@ -158,8 +159,8 @@ func New(options ...Option) *Pruner {
 		ch:      make(chan func()),
 	}
 
-	for _, o := range options {
-		o(v)
+	for _, option := range options {
+		option(v)
 	}
 
 	return v
@@ -345,9 +346,9 @@ func dirStats(dir string) (*Stats, error) {
 
 // toMap returns a map from slice.
 func toMap(s []string) map[string]struct{} {
-	m := make(map[string]struct{})
+	map_p := make(map[string]struct{})
 	for _, v := range s {
-		m[v] = struct{}{}
+		map_p[v] = struct{}{}
 	}
-	return m
+	return map_p
 }
