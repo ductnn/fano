@@ -10,29 +10,27 @@ import (
 	"github.com/apex/log"
 )
 
-// Stats for a prune.
+// Stats prune.
 type Stats struct {
 	FilesTotal   int64
 	FilesRemoved int64
 	SizeRemoved  int64
 }
 
-// Pruner is a module pruner.
+// Module Pruner.
 type Pruner struct {
-	dir     string
-	log     log.Interface
-	dirs    map[string]struct{}
-	exts    map[string]struct{}
-	excepts []string
-	globs   []string
-	files   map[string]struct{}
-	ch      chan func()
-	wg      sync.WaitGroup
+	dir   string
+	log   log.Interface
+	dirs  map[string]struct{}
+	exts  map[string]struct{}
+	files map[string]struct{}
+	ch    chan func()
+	wg    sync.WaitGroup
 }
 
 type Option func(*Pruner)
 
-// toMap returns a map from slice.
+// Map from slice.
 func toMap(s []string) map[string]struct{} {
 	map_p := make(map[string]struct{})
 	for _, v := range s {
@@ -52,14 +50,12 @@ func New(options ...Option) *Pruner {
 	var DefaultExtensions = []string{string(extension_default)}
 
 	v := &Pruner{
-		dir:     "node_modules",
-		log:     log.Log,
-		exts:    toMap(DefaultExtensions),
-		excepts: []string{},
-		globs:   []string{},
-		dirs:    toMap(DefaultDirectories),
-		files:   toMap(DefaultFiles),
-		ch:      make(chan func()),
+		dir:   "node_modules",
+		log:   log.Log,
+		exts:  toMap(DefaultExtensions),
+		dirs:  toMap(DefaultDirectories),
+		files: toMap(DefaultFiles),
+		ch:    make(chan func()),
 	}
 
 	for _, option := range options {
@@ -73,20 +69,6 @@ func New(options ...Option) *Pruner {
 func WithDir(s string) Option {
 	return func(v *Pruner) {
 		v.dir = s
-	}
-}
-
-// WithGlobs option.
-func WithGlobs(s []string) Option {
-	return func(v *Pruner) {
-		v.globs = s
-	}
-}
-
-// WithExceptions option.
-func WithExceptions(s []string) Option {
-	return func(v *Pruner) {
-		v.excepts = s
 	}
 }
 
@@ -112,7 +94,7 @@ func WithFiles(s []string) Option {
 }
 
 // Prune performs the pruning.
-func (p *Pruner) Prune() (*Stats, error) {
+func (p *Pruner) Fano() (*Stats, error) {
 	var stats Stats
 
 	p.startN(runtime.NumCPU())
@@ -132,7 +114,7 @@ func (p *Pruner) Prune() (*Stats, error) {
 		})
 
 		// keep
-		if !p.prune(path, info) {
+		if !p.fano(path, info) {
 			ctx.Debug("keep")
 			return nil
 		}
@@ -172,23 +154,7 @@ func (p *Pruner) Prune() (*Stats, error) {
 }
 
 // prune returns true if the file or dir should be pruned.
-func (p *Pruner) prune(path string, info os.FileInfo) bool {
-	// exceptions
-	for _, glob := range p.excepts {
-		matched, _ := filepath.Match(glob, info.Name())
-		if matched {
-			return false
-		}
-	}
-
-	// globs
-	for _, glob := range p.globs {
-		matched, _ := filepath.Match(glob, info.Name())
-		if matched {
-			return true
-		}
-	}
-
+func (p *Pruner) fano(path string, info os.FileInfo) bool {
 	// directories
 	if info.IsDir() {
 		_, ok := p.dirs[info.Name()]
