@@ -20,11 +20,9 @@ Then, you can copy file `fano` to project nodejs and run:
 
 ```bash
 ➜  nodejs-boilerplate git:(master) ✗ ./fano node_modules
-
-         Files total 78,206
-       Files removed 20,069
-        Size removed 55 MB
-            Duration 5.551s
+Files total:   78,206
+Files removed: 20,069
+Size removed:  55 MB
 ```
 
 or check [Makefile](https://github.com/ductnn/fano/blob/master/Makefile) for building bin on your local.
