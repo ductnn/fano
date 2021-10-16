@@ -43,9 +43,9 @@ func toMap(s []string) map[string]struct{} {
 
 // New with the given options.
 func New(options ...Option) *Pruner {
-	files_default, _ := os.ReadFile("./files.txt")
-	dir_default, _ := os.ReadFile("./dir.txt")
-	extension_default, _ := os.ReadFile("./extension.txt")
+	files_default, _ := os.ReadFile("./default-prune/files.txt")
+	dir_default, _ := os.ReadFile("./default-prune/dir.txt")
+	extension_default, _ := os.ReadFile("./default-prune/extension.txt")
 
 	var DefaultFiles = []string{string(files_default)}
 	var DefaultDirectories = []string{string(dir_default)}
