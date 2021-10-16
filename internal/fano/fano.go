@@ -10,119 +10,6 @@ import (
 	"github.com/apex/log"
 )
 
-// DefaultFiles.
-var DefaultFiles = []string{
-	"Jenkinsfile",
-	"Makefile",
-	"Gulpfile.js",
-	"Gruntfile.js",
-	"gulpfile.js",
-	".DS_Store",
-	".tern-project",
-	".gitattributes",
-	".editorconfig",
-	".eslintrc",
-	"eslint",
-	".eslintrc.js",
-	".eslintrc.json",
-	".eslintrc.yml",
-	".eslintignore",
-	".stylelintrc",
-	"stylelint.config.js",
-	".stylelintrc.json",
-	".stylelintrc.yaml",
-	".stylelintrc.yml",
-	".stylelintrc.js",
-	".htmllintrc",
-	"htmllint.js",
-	".lint",
-	".npmrc",
-	".npmignore",
-	".jshintrc",
-	".flowconfig",
-	".documentup.json",
-	".yarn-metadata.json",
-	".travis.yml",
-	"appveyor.yml",
-	".gitlab-ci.yml",
-	"circle.yml",
-	".coveralls.yml",
-	"CHANGES",
-	"changelog",
-	"LICENSE.txt",
-	"LICENSE",
-	"LICENSE-MIT",
-	"LICENSE.BSD",
-	"license",
-	"LICENCE.txt",
-	"LICENCE",
-	"LICENCE-MIT",
-	"LICENCE.BSD",
-	"licence",
-	"AUTHORS",
-	"CONTRIBUTORS",
-	".yarn-integrity",
-	".yarnclean",
-	"_config.yml",
-	".babelrc",
-	".yo-rc.json",
-	"jest.config.js",
-	"karma.conf.js",
-	"wallaby.js",
-	"wallaby.conf.js",
-	".prettierrc",
-	".prettierrc.yml",
-	".prettierrc.toml",
-	".prettierrc.js",
-	".prettierrc.json",
-	"prettier.config.js",
-	".appveyor.yml",
-	"tsconfig.json",
-	"tslint.json",
-	".gitmodules",
-	"npm-debug.log",
-	"thumbs.db",
-}
-
-// DefaultDirectories.
-var DefaultDirectories = []string{
-	"__tests__",
-	"test",
-	"tests",
-	"powered-test",
-	"docs",
-	"doc",
-	".idea",
-	".vscode",
-	"website",
-	"images",
-	"assets",
-	"example",
-	"examples",
-	"coverage",
-	".nyc_output",
-	".circleci",
-	".github",
-	".git",
-	".gitlab",
-	"node-gyp",
-	"node-pre-gyp",
-	"gyp",
-}
-
-// DefaultExtensions.
-var DefaultExtensions = []string{
-	".markdown",
-	".md",
-	".mkd",
-	".ts",
-	".jst",
-	".coffee",
-	".tgz",
-	".swp",
-	".js.map",
-}
-
 // Stats for a prune.
 type Stats struct {
 	FilesTotal   int64
@@ -145,8 +32,25 @@ type Pruner struct {
 
 type Option func(*Pruner)
 
+// toMap returns a map from slice.
+func toMap(s []string) map[string]struct{} {
+	map_p := make(map[string]struct{})
+	for _, v := range s {
+		map_p[v] = struct{}{}
+	}
+	return map_p
+}
+
 // New with the given options.
 func New(options ...Option) *Pruner {
+	files_default, _ := os.ReadFile("./files.txt")
+	dir_default, _ := os.ReadFile("./dir.txt")
+	extension_default, _ := os.ReadFile("./extension.txt")
+
+	var DefaultFiles = []string{string(files_default)}
+	var DefaultDirectories = []string{string(dir_default)}
+	var DefaultExtensions = []string{string(extension_default)}
+
 	v := &Pruner{
 		dir:     "node_modules",
 		log:     log.Log,
@@ -341,13 +245,4 @@ func dirStats(dir string) (*Stats, error) {
 	})
 
 	return &stats, err
-}
-
-// toMap returns a map from slice.
-func toMap(s []string) map[string]struct{} {
-	map_p := make(map[string]struct{})
-	for _, v := range s {
-		map_p[v] = struct{}{}
-	}
-	return map_p
 }
