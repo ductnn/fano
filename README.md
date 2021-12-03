@@ -4,6 +4,14 @@
 
 A simple tool that help you remove unneeded files from `node_modules` folder.
 
+```bash
+ _____
+|  ___|_ _ _ __   ___
+| |_ / _` | '_ \ / _ \
+|  _| (_| | | | | (_) |
+|_|  \__,_|_| |_|\___/
+```
+
 ## Installation
 
 From source:
